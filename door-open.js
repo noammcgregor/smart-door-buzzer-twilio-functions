@@ -2,9 +2,13 @@ exports.handler = function(context, event, callback) {
   let twiml = new Twilio.twiml.VoiceResponse();
   
   // Get rid of random non-alphabetical chars and put to lower case
-  var cleanString = event.SpeechResult.replace(/[^\w\s]|_/g, "")
-                    .replace(/\s+/g, " ");
-  var cleanSpeechResult = cleanString.toLowerCase();
+  if (event.SpeechResult !== undefined) {
+    var cleanString = event.SpeechResult.replace(/[^\w\s]|_/g, "")
+          .replace(/\s+/g, " ");
+      var cleanSpeechResult = cleanString.toLowerCase(); 
+    } else {
+      var cleanSpeechResult = " ";
+    }
   
   console.log('Speech: ' + cleanSpeechResult + '; confidence: ' + event.Confidence)
   console.log('Digits: ' + event.Digits)

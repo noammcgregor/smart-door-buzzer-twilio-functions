@@ -14,7 +14,7 @@ exports.handler = function(context, event, callback) {
     action: '/door-open',
     hints: context.PASSPHRASE,
     input: 'speech dtmf',
-    numDigits: '4',
+    numDigits: '3',
     speechTimeout: 'auto',
     timeout: 2,
   })

@@ -12,10 +12,9 @@ exports.handler = function(context, event, callback) {
   if ( (cleanSpeechResult == context.PASSPHRASE && event.Confidence > 0.5) 
           || event.Digits == context.PASSCODE) {
     // Check if we have a password match, and open the door
-    twiml.say({voice: 'man'}, 'Nice! fam!')
-    twiml.play({digits: '9'}) // Pressing 9 sends DTFM tone to open the door
+    twiml.say({voice: 'man'}, 'Welcome! friend!')
+    twiml.play({digits: '6666'}) // Pressing 9 sends DTFM tone to open the door
     twiml.pause({length:1})
-    twiml.play('http://demo.twilio.com/docs/classic.mp3')
 
     // Also send me a text on this 
     twiml.redirect('/text-me?Method=code')

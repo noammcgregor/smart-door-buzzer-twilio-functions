@@ -3,11 +3,16 @@ exports.handler = function(context, event, callback) {
 
 	var bodyText;
 
-	if (event.Method == 'code') {bodyText = 'Someone used the password to get in the building.'} 
-	else {bodyText = 'Somebody buzzed the door but didn\'t know the passcode.'}
+	if (event.Method == 'phrase') {
+	    bodyText = 'Someone used the entry PHRASE.'
+	} else if (event.Method == 'code') {
+	    bodyText = 'Someone used the entry CODE.'
+	}	else {
+	    bodyText = 'Someone buzzed but didn\'t know the passcode.'
+	}
 
 	context.getTwilioClient().messages.create({
-		to: context.JOHN_PHONE,
+		to: context.NOAM_PHONE,
 		from: context.TWILIO_PHONE,
 		body: bodyText,
 	})

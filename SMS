@@ -4,11 +4,13 @@ exports.handler = function(context, event, callback) {
 	var bodyText;
 
 	if (event.Method == 'phrase') {
-	    bodyText = 'Someone used the entry PHRASE.'
+	    bodyText = 'Access granted using entry PHRASE.'
 	} else if (event.Method == 'code') {
-	    bodyText = 'Someone used the entry CODE.'
-	}	else {
-	    bodyText = 'Someone buzzed but didn\'t know the passcode.'
+	    bodyText = 'Access granted using entry CODE.'
+	} else if (event.Method == 'auto') {
+	    bodyText = 'Access granted.'
+	} else {
+	    bodyText = 'Call forwarded.'
 	}
 
 	context.getTwilioClient().messages.create({

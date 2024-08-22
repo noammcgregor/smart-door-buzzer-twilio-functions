@@ -6,6 +6,12 @@ exports.handler = function(context, event, callback) {
         var cleanString = event.SpeechResult.replace(/[^\w\s]|_/g, "")
             .replace(/\s+/g, " ");
         var cleanSpeechResult = cleanString.toLowerCase(); 
+        
+        context.getTwilioClient().messages.create({
+    		to: context.NOAM_PHONE,
+    		from: context.TWILIO_PHONE,
+    		body: 'Speech: \n'+cleanSpeechResult + '\nConfidence '+event.Confidence,
+    	})
     } else {
         var cleanSpeechResult = " ";
     }
@@ -13,10 +19,10 @@ exports.handler = function(context, event, callback) {
     console.log('Speech: ' + cleanSpeechResult + '; confidence: ' + event.Confidence)
     console.log('Digits: ' + event.Digits)
     
-    if (cleanSpeechResult == context.PASSPHRASE && event.Confidence > 0.5) {
+    if (cleanSpeechResult == context.PASSPHRASE) {
         // Check if we have a passphrase match, and open the door
-        twiml.say({voice: 'man'}, 'Welcome! friend!')
-        twiml.play({digits: '6666'}) // Pressing 6 sends DTFM tone to open the door
+        twiml.say({voice: 'man'}, 'Welcome friend!')
+        twiml.play({digits: '99999999'}) // Pressing 9 sends DTFM tone to open the door
         twiml.pause({length:1})
         
         // Also send me a text on this 
@@ -24,14 +30,14 @@ exports.handler = function(context, event, callback) {
         callback(null, twiml)  
     } else if (event.Digits == context.PASSCODE){
         // Check if we have a passcode match, and open the door
-        twiml.say({voice: 'man'}, 'Welcome! friend!')
-        twiml.play({digits: '6666'}) // Pressing 6 sends DTFM tone to open the door
+        twiml.say({voice: 'man'}, 'Welcome friend!')
+        twiml.play({digits: '99999999'}) // Pressing 9 sends DTFM tone to open the door
         twiml.pause({length:1})
         
         // Also send me a text on this 
         twiml.redirect('/text-me?Method=code')
         callback(null, twiml)
-    }else {
+    } else {
         twiml.redirect('/call-residents')
         callback(null, twiml)
     }
